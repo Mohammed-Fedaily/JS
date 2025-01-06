@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Exercice 0</h1>
+
+    <script type="text/javascript">
+      /* Section 1 */
+
+      var name = "Joe"; // Déclare une variable 'name' qui contient la chaîne de caractères "Joe"
+      var city = "London"; // Déclare une variable 'city' qui contient la chaîne de caractères "London"
+      var age = 32; // Déclare une variable 'age' qui contient le nombre 32
+      var isRed = true; // Déclare une variable booléenne 'isRed' qui est vraie
+      var isOld = age > 90; // Déclare une variable booléenne 'isOld' qui vérifie si l'âge est supérieur à 90 (sera false)
+
+      var previousJobs = ["lawyer", "developper", "Professionnal climber"]; // Déclare un tableau contenant trois métiers précédents
+
+      // Déclare une fonction 'info' qui prend deux paramètres: la taille et le poids
+      function info(height, weight) {
+        // Si la taille est supérieure à 180cm
+        if (height > 180) {
+          // Affiche "Vous êtes grand"
+          console.log("Vous êtes grand");
+        }
+        // Si le poids est négatif
+        if (weight < 0) {
+          // Affiche un message d'erreur
+          console.log("oups, there is a problem");
+        }
+        // Sinon si le poids est inférieur à 15kg
+        else if (weight < 15) {
+          // Affiche une question sur la minceur
+          console.log("Are you that slim ?");
+        }
+        // Dans tous les autres cas
+        else {
+          // Affiche "Good !"
+          console.log("Good !");
+        }
+      }
+
+      // Appelle la fonction avec une taille de 165cm et un poids de 45kg
+      info(165, 45);
+
+      // Déclare une variable pour ma taille
+      var myHeight = 171;
+
+      // Déclare une variable pour mon poids
+      var myWeight = 64;
+
+      // Appelle la fonction avec mes mesures
+      info(myHeight, myWeight);
+
+      // Appelle la fonction avec ma taille +15cm et mon poids -100kg
+      info(myHeight + 15, myWeight - 100);
+
+      // Déclare une fonction qui prend un paramètre
+      function toUpper(variable) {
+        // Retourne la chaîne en majuscules en utilisant toUpperCase()
+        return variable.toUpperCase();
+      }
+
+      // Applique la fonction toUpper sur la variable name
+      var upperName = toUpper(name);
+
+      // Boucle qui s'exécute 3 fois
+      for (i = 0; i < 3; i = i + 1) {
+        // Affiche chaque métier du tableau
+        console.log(previousJobs[i]);
+      }
+
+      /* Section 2: */
+
+      // afficher la ville dans laquele Joe vit.
+      console.log("Joe vit à " + city);
+      // afficher si Joe est roux ou pas.
+      console.log("Est-ce que Joe est roux ? " + isRed);
+      /* Section 3 */
+      //Si on décommente la ligne console.log(myVariable);, une erreur se produira car la variable myVariable n'a jamais été déclarée dans le code.
+
+      // console.log(myVariable);
+    </script>
+  </body>
+</html>
