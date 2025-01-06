@@ -1,16 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <style>
+      .container {
+        margin: 20px;
+      }
+      .filters,
+      .sorting,
+      .add-form {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f5f5f5;
+      }
+      .article {
+        border: 1px solid #ddd;
+        margin: 10px 0;
+        padding: 10px;
+      }
+      .out-of-stock {
+        background-color: #ffebee;
+      }
+      .add-form input,
+      .add-form select {
+        margin: 5px 0;
+      }
+    </style>
   </head>
-
   <body>
     <div class="container">
-						<h1>Exercice 7</h1>
-				</div>
+      <h1>Exercice 7</h1>
+
+      <div class="filters">
+        <input type="text" id="typeFilter" placeholder="Filtrer par type..." />
+        <button onclick="applyFilters()">Rechercher</button>
+        <label>
+          <input type="checkbox" id="stockFilter" onchange="applyFilters()" />
+          Articles en stock uniquement
+        </label>
+      </div>
+
+      <div class="sorting">
+        <select id="sortField">
+          <option value="name">Nom</option>
+          <option value="price">Prix</option>
+        </select>
+        <select id="sortOrder">
+          <option value="asc">Ascendant</option>
+          <option value="desc">Descendant</option>
+        </select>
+        <button onclick="applySorting()">Trier</button>
+      </div>
+
+      <div class="add-form">
+        <h3>Ajouter un article</h3>
+        <input type="text" id="newName" placeholder="Nom" required /><br />
+        <select id="newType">
+          <option value="car">Voiture</option>
+          <option value="house">Maison</option>
+          <option value="game">Jeu</option>
+          <option value="videoGame">Jeu Vidéo</option>
+          <option value="show">Spectacle</option></select
+        ><br />
+        <input
+          type="text"
+          id="newDescription"
+          placeholder="Description"
+        /><br />
+        <input type="number" id="newPrice" placeholder="Prix" required /><br />
+        <input
+          type="number"
+          id="newQuantity"
+          placeholder="Quantité"
+          required
+        /><br />
+        <button onclick="addNewArticle()">Ajouter</button>
+      </div>
+
+      <div id="articleList"></div>
+    </div>
+
     <script src="datas.js"></script>
     <script src="exo7.js"></script>
-  </body>
+    <script>
+      function applySorting() {
+        const field = document.getElementById("sortField").value;
+        const order = document.getElementById("sortOrder").value;
 
+        let sorted = [...articlesWithTranslation].sort((a, b) => {
+          if (order === "asc") {
+            return a[field] > b[field] ? 1 : -1;
+          } else {
+            return a[field] < b[field] ? 1 : -1;
+          }
+        });
+
+        displayArticles(sorted);
+      }
+
+      function addNewArticle() {
+        const newArticle = {
+          name: document.getElementById("newName").value,
+          type: document.getElementById("newType").value,
+          description: document.getElementById("newDescription").value,
+          price: Number(document.getElementById("newPrice").value),
+          quantity: Number(document.getElementById("newQuantity").value),
+          translatedType:
+            typeTranslations[document.getElementById("newType").value],
+        };
+
+        articlesWithTranslation.push(newArticle);
+        displayArticles(articlesWithTranslation);
+
+        document.getElementById("newName").value = "";
+        document.getElementById("newDescription").value = "";
+        document.getElementById("newPrice").value = "";
+        document.getElementById("newQuantity").value = "";
+      }
+
+      function displayArticles(articles) {
+        const container = document.getElementById("articleList");
+        container.innerHTML = "";
+
+        articles.forEach((article) => {
+          const articleDiv = document.createElement("div");
+          articleDiv.className = `article ${
+            article.quantity === 0 ? "out-of-stock" : ""
+          }`;
+
+          articleDiv.innerHTML = `
+                    <h3>${article.name}</h3>
+                    <p>Type: ${article.translatedType}</p>
+                    <p>Description: ${
+                      article.description || "Pas de description"
+                    }</p>
+                    <p>Prix: ${article.price}€</p>
+                    <p>Quantité: ${article.quantity}</p>
+                `;
+
+          container.appendChild(articleDiv);
+        });
+      }
+
+      function applyFilters() {
+        let filtered = [...articlesWithTranslation];
+
+        const typeValue = document
+          .getElementById("typeFilter")
+          .value.toLowerCase();
+        if (typeValue) {
+          filtered = filtered.filter(
+            (article) =>
+              article.translatedType.toLowerCase().includes(typeValue) ||
+              article.type.toLowerCase().includes(typeValue)
+          );
+        }
+
+        const showInStockOnly = document.getElementById("stockFilter").checked;
+        if (showInStockOnly) {
+          filtered = filtered.filter((article) => article.quantity > 0);
+        }
+
+        displayArticles(filtered);
+      }
+
+      displayArticles(articlesWithTranslation);
+    </script>
+  </body>
 </html>
