@@ -1,4 +1,4 @@
-# Activités Javascript
+## Activités Javascript
 
 ## Sommaire
 
